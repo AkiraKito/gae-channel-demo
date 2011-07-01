@@ -29,6 +29,9 @@ application = webapp.WSGIApplication([
 
 
 def main():
+    from google.appengine.api.channel.channel import _GetService
+    logging.info('channel service type: %s' % _GetService())
+
     util.run_wsgi_app(application)
 
 

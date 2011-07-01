@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import cgi
-import uuid
 import os
 import logging
 
@@ -14,6 +12,7 @@ from django.utils import simplejson as json
 
 
 class MemcacheList(object):
+    """GAE Memcache based list."""
 
     def __init__(self, key):
         self.memcache_key = key
@@ -116,9 +115,6 @@ class ConnectedHandler(webapp.RequestHandler):
             members.append(client_id)
             deliver_message(u'%s has joined!' % client_id)
 
-    def get(self):
-        logging.info('get!!')
-
 
 class DisconnectedHandler(webapp.RequestHandler):
     """Call post method when disconnected the user from channel."""
@@ -149,5 +145,4 @@ class MessageHandler(webapp.RequestHandler):
     def get(self):
         """Get message log."""
         self.response.out.write(json.dumps(messages()))
-
 
