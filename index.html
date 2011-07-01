@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<script type="text/javascript", src="/jquery-1.6.2.min.js"></script>
+<script type="text/javascript", src="/_ah/channel/jsapi"></script>
+<script type="text/javascript">
+$(document).ready( function(){
+	var channel = new goog.appengine.Channel('{{ token }}');
+
+	var socket = channel.open();
+	socket.onopen = function(){
+		var logs = $.getJSON('/message', function(json){
+			$.each(json, function(i, val){
+				$('#log').prepend(val);
+			});
+		});
+	};
+	socket.onmessage = function(message){
+		$('#log').prepend(message.data);
+	};
+	socket.onerror = function(err){
+		alert('error!');
+	};
+	socket.onclose = function(){
+		alert('close!');
+	};
+
+	$('#post').click( function(){
+		$.post('/message',
+			{'mes': $('#message').val()}
+		);
+		$('#message').val('');
+	});
+});
+</script>
+<style type="text/css">
+</style>
+<title>Channel</title>
+</head>
+<body>
+	<h1>Channel&nbsp;API&nbsp;demo</h1>
+	<textarea rows="25" cols="50" id="log" readonly="readonly"></textarea><br>
+	<input type="text" id="message" size="50">
+	<button id="post">post!</button>
+</body>
+</html>

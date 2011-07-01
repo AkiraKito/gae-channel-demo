@@ -1,0 +1,17 @@
+application: channel-demo
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /jquery-1\.6\.2\.min\.js
+  static_files: jquery-1.6.2.min.js
+  upload: jquery-1.6.2.min.js
+
+- url: /.*
+  script: main.py
+  login: required
+
+inbound_services:
+- channel_presence
+
