@@ -8,6 +8,9 @@ handlers:
   static_files: jquery-1.6.2.min.js
   upload: jquery-1.6.2.min.js
 
+- url: /_ah/channel/.*
+  script: main.py
+
 - url: /.*
   script: main.py
   login: required
